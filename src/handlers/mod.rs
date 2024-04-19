@@ -1,0 +1,17 @@
+use poise::serenity_prelude as serenity;
+use crate::{Data, events};
+use crate::events::error::{CommandResult, Error};
+
+pub async fn event_handler(
+    ctx: &serenity::Context,
+    event: &serenity::FullEvent,
+    _framework: poise::FrameworkContext<'_, Data, Error>
+) -> CommandResult {
+    match event {
+        serenity::FullEvent::Message { new_message } => events::messages::handler(ctx, new_message).await?,
+        serenity::FullEvent::MessageDelete { channel_id, deleted_message_id, .. } => events::deleted::handler(ctx, channel_id, deleted_message_id).await?,
+        _ => println!("Event: {:?}", event.snake_case_name())
+    }
+
+    Ok(())
+}
