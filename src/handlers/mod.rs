@@ -9,7 +9,8 @@ pub async fn event_handler(
 ) -> CommandResult {
     match event {
         serenity::FullEvent::Message { new_message } => events::messages::handler(ctx, new_message).await?,
-        serenity::FullEvent::MessageDelete { channel_id, deleted_message_id, .. } => events::deleted::handler(ctx, channel_id, deleted_message_id).await?,
+        serenity::FullEvent::MessageUpdate { event, .. } => events::updated::handler(ctx, event).await?,
+        serenity::FullEvent::MessageDelete { deleted_message_id, .. } => events::deleted::handler(ctx, deleted_message_id).await?,
         _ => println!("Event: {:?}", event.snake_case_name())
     }
 
