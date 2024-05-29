@@ -16,6 +16,5 @@ jobs:
           name: "ryuko"
           allow-dirty: "true"
           no-test: "true"
-          cargo-shuttle-version: "0.43.0"
           secrets: | 
             DISCORD_TOKEN = '${{ secrets.DISCORD_TOKEN }}'
