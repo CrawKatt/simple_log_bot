@@ -1,3 +1,5 @@
+pub mod anti_spam;
+
 use poise::serenity_prelude as serenity;
 use crate::{Data, events};
 use crate::events::error::{CommandResult, Error};
