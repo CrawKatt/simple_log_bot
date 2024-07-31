@@ -5,6 +5,7 @@ mod events;
 mod database;
 
 use anyhow::Context as _;
+use crate::handlers::anti_spam::message_tracker_cleaner;
 
 // User data, which is stored and accessible in all command invocations
 struct Data;
@@ -20,6 +21,9 @@ async fn main(#[shuttle_runtime::Secrets] secret_store: shuttle_runtime::SecretS
 
     // Borrar mensajes de la Base de Datos cada 24 horas
     database::clean_database_loop();
+    
+    // Limpiar el Tracker de mensajes de spam cada 5 segundos
+    message_tracker_cleaner();
 
     // Get the discord token set in `Secrets.toml`
     let discord_token = secret_store
